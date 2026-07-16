@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import  { nanoid } from "nanoid";
 
-const Form = ({ setUsers, setToggle, users }) => {
+
+const Form = ({ setUsers, setToggle, users,updatedUser }) => {
   let {
     register,
     handleSubmit,
@@ -9,10 +11,7 @@ const Form = ({ setUsers, setToggle, users }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: {
-      name: "Pandu",
-      email: "pandu@gmail.com",
-    },
+    defaultValues: updatedUser || {}
   });
 
 
@@ -30,11 +29,31 @@ const Form = ({ setUsers, setToggle, users }) => {
 // it was modified to store users in localStorage and update the users state accordingly. This way, the users will persist across sessions, and the form will reset after submission.
 
 let formSubmit = (data) => {
-    let arr = [...users,data];
-    setUsers(arr);
-    localStorage.setItem("users", JSON.stringify(arr)); // Store users in localStorage
+
+     if (updatedUser) {
+    // Update existing user
+    const updatedUsers = users.map((user) =>
+      user.id === updatedUser.id
+        ? { ...data, id: updatedUser.id }
+        : user
+    );
+
+    setUsers(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
+       
+    } else {
+        let arr = [...users,{...data, id: nanoid()}];
+        setUsers(arr);
+        localStorage.setItem("users", JSON.stringify(arr)); // Store users in localStorage
+    }
     reset();
     setToggle((prev) => !prev);
+
+    // let arr = [...users,data];
+    // setUsers(arr);
+    // localStorage.setItem("users", JSON.stringify(arr)); // Store users in localStorage
+    // reset();
+    // setToggle((prev) => !prev);
   };
 
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Usercard = ({ user, setToggle,deleteUser }) => {
+const Usercard = ({ user, setToggle,deleteUser, setUpdatedUser,ind }) => {
   return (
     <div className="p-4 border border-white bg-black rounded flex flex-col gap-2">
       <div className="h-40 w-40">
@@ -17,13 +17,15 @@ const Usercard = ({ user, setToggle,deleteUser }) => {
       </div>
       <div className="flex w-full justify-between gap-4">
         <button
-          onClick={() => setToggle((prev) => !prev)}
-          
-          className="bg-yellow-700 text-white py-2 px-3 rounded"
+          onClick={() => {
+            setUpdatedUser(user);
+            setToggle((prev) => !prev);
+          }}
+          className="bg-yellow-700 text-white py-2 px-3 rounded" 
         >
           Update
         </button>
-        <button className="bg-red-700 text-white py-2 px-3 rounded" onClick = {()=>deleteUser(user.ind)}>
+        <button className="bg-red-700 text-white py-2 px-3 rounded" onClick = {()=>deleteUser(ind)}>
           Delete
         </button>
       </div>
