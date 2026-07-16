@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const Form = ({ setUsers, setToggle }) => {
+const Form = ({ setUsers, setToggle, users }) => {
   let {
     register,
     handleSubmit,
@@ -16,13 +16,31 @@ const Form = ({ setUsers, setToggle }) => {
   });
 
 
+
+//   it was commented out because it was storing users in localStorage, which might not be necessary for the current implementation. If you want to persist users across sessions, you can uncomment it and use localStorage.
   
-  let formSubmit = (data) => {
-    console.log(data);
-    setUsers((prev) => [...prev, data]);
+//   let formSubmit = (data) => {
+//     console.log(data);
+//     setUsers((prev) => [...prev, data]);
+//     localStorage.setItem("users", JSON.stringify([...users, data])) || []; // Store users in localStorage
+//     reset();
+//     setToggle((prev) => !prev);
+//   };
+
+// it was modified to store users in localStorage and update the users state accordingly. This way, the users will persist across sessions, and the form will reset after submission.
+
+let formSubmit = (data) => {
+    let arr = [...users,data];
+    setUsers(arr);
+    localStorage.setItem("users", JSON.stringify(arr)); // Store users in localStorage
     reset();
     setToggle((prev) => !prev);
   };
+
+
+
+
+
 
   return (
     <div className="flex flex-col items-center gap-3">
