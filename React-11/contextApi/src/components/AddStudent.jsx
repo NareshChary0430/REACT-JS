@@ -6,7 +6,7 @@ const AddStudent = () => {
   const [name, setName] = useState("");
   const [course, setCourse] = useState("");
 
-  const { addStudent } = useContext(StudentContext);
+  const { addStudent } =  (StudentContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
